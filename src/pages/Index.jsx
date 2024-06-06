@@ -28,7 +28,7 @@ const Index = () => {
         <HStack spacing={4}>
           <Link href="#">Home</Link>
           <Link href="#">Recipes</Link>
-          <Link href="#">Submit a Recipe</Link>
+          <Link href="/submit-recipe">Submit a Recipe</Link>
           <Link href="#">Contact</Link>
         </HStack>
       </Flex>
@@ -37,7 +37,7 @@ const Index = () => {
       <Box bg="gray.100" padding={10} textAlign="center">
         <Heading>Welcome to Recipe Sharing</Heading>
         <Text fontSize="lg" marginTop={4}>Discover and share amazing recipes from around the world.</Text>
-        <Button colorScheme="teal" size="lg" marginTop={6}>Submit a Recipe</Button>
+        <Button as={Link} href="/submit-recipe" colorScheme="teal" size="lg" marginTop={6}>Submit a Recipe</Button>
       </Box>
 
       {/* Recipes Section */}
