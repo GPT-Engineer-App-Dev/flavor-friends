@@ -1,23 +1,67 @@
-import { Box, Button, Container, Flex, Heading, HStack, Image, Link, Stack, Text, VStack } from "@chakra-ui/react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Box, Button, Container, Flex, Heading, HStack, Image, Link, Stack, Text, VStack, Input } from "@chakra-ui/react";
+import { FaFacebook, FaTwitter, FaInstagram, FaStar } from "react-icons/fa";
+import { useState } from "react";
+
+const StarRating = ({ rating, onRate }) => {
+  const [hover, setHover] = useState(null);
+
+  return (
+    <Flex>
+      {[...Array(5)].map((_, index) => {
+        const ratingValue = index + 1;
+        return (
+          <Box
+            as="label"
+            key={index}
+            cursor="pointer"
+            onMouseEnter={() => setHover(ratingValue)}
+            onMouseLeave={() => setHover(null)}
+            onClick={() => onRate(ratingValue)}
+          >
+            <Input
+              type="radio"
+              name="rating"
+              value={ratingValue}
+              style={{ display: "none" }}
+            />
+            <FaStar
+              size={24}
+              color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+            />
+          </Box>
+        );
+      })}
+    </Flex>
+  );
+};
 
 const recipes = [
   {
     title: "Spaghetti Carbonara",
     description: "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
-    image: "https://via.placeholder.com/150"
+    image: "https://via.placeholder.com/150",
+    rating: 4
   },
   {
     title: "Chicken Tikka Masala",
     description: "A popular Indian curry dish made with roasted marinated chicken chunks in spiced curry sauce.",
-    image: "https://via.placeholder.com/150"
+    image: "https://via.placeholder.com/150",
+    rating: 5
   },
   {
     title: "Chocolate Cake",
     description: "A rich and moist chocolate cake perfect for any occasion.",
-    image: "https://via.placeholder.com/150"
+    image: "https://via.placeholder.com/150",
+    rating: 3
   }
 ];
+
+const handleRating = (index, rating) => {
+  const updatedRecipes = [...recipes];
+  updatedRecipes[index].rating = rating;
+  // Here you would normally update the rating in the backend
+  console.log(`Recipe ${index + 1} rated with ${rating} stars`);
+};
 
 const Index = () => {
   return (
@@ -50,6 +94,7 @@ const Index = () => {
               <Box padding={6}>
                 <Heading size="md">{recipe.title}</Heading>
                 <Text marginTop={4}>{recipe.description}</Text>
+                <StarRating rating={recipe.rating} onRate={(rating) => handleRating(index, rating)} />
               </Box>
             </Box>
           ))}
